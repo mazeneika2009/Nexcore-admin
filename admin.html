@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexcore Admin Panel</title>
+    <link rel="stylesheet" href="public/css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Nexcore</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Admin Dashboard</h1>
+                <div class="user-info">Welcome, Admin</div>
+            </header>
+            <section class="dashboard-cards">
+                <div class="card"><h3>Contact Messages</h3><p id="messageCount" class="card-count" style="font-size: 2.5rem; font-weight: 700; color: #1a1a2e; margin: 10px 0;">0</p></div>
+                <div class="card"><h3>Database Status</h3><p id="dbStatus" class="status-ok">Checking...</p></div>
+            </section>
+            <section class="data-table-section" style="margin-top: 40px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+                <h2>Recent Contact Messages </h2>
+                <div style="margin: 15px 0;">
+                    <input type="text" id="searchInput" placeholder="Search by name, email or message..." style="width: 100%; padding: 12px; border: 1px solid #f0f2f5; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.3s;" onfocus="this.style.borderColor='#1a1a2e'" onblur="this.style.borderColor='#f0f2f5'">
+                </div>
+                <table id="messageTable" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <thead>
+                        <tr style="text-align: left; border-bottom: 2px solid #f0f2f5;">
+                            <th style="padding: 12px;">User ID</th>
+                            <th style="padding: 12px;">Name</th>
+                            <th style="padding: 12px;">Email</th>
+                            <th style="padding: 12px;">Message</th>
+                            <th style="padding: 12px;">Date</th>
+                            <th style="padding: 12px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="messageBody">
+                        <!-- Data injected here -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script src="public/js/admin.js"></script>
+</body>
+</html>
