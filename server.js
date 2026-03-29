@@ -72,17 +72,43 @@ app.get('/api/admin/messages', (req, res) => {
             userName: decrypt(row.UserName),
             email: decrypt(row.Email),
             message: decrypt(row.Message),
-            date: row.CreatedAt
+            date: row.CreatedAt,
+            isReplied: !!row.IsReplied
         }));
         res.json(decryptedResults);
     });
 });
 
+app.post('/api/admin/login', (req, res) => {
+    const { user, pass } = req.body;
+    if (user === process.env.ADMIN_USER && pass === process.env.ADMIN_PASS) {
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+    }
+});
+
 app.delete('/api/admin/messages/:id', (req, res) => {
+    const user = req.headers['x-admin-user'];
+    const pass = req.headers['x-admin-pass'];
+
+    if (user !== process.env.ADMIN_USER || pass !== process.env.ADMIN_PASS) {
+        console.warn(`Unauthorized deletion attempt by: ${user}`);
+        return res.status(401).json({ error: 'Unauthorized credentials for deletion' });
+    }
+
     const query = 'DELETE FROM Contact_data WHERE UserID = ?';
     db.query(query, [req.params.id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Message deleted successfully' });
+    });
+});
+
+app.patch('/api/admin/messages/:id/replied', (req, res) => {
+    const query = 'UPDATE Contact_data SET IsReplied = 1 WHERE UserID = ?';
+    db.query(query, [req.params.id], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Message marked as replied' });
     });
 });
 
